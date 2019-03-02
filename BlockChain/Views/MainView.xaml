@@ -30,7 +30,9 @@
         <TextBlock Text="Sending to: " FontSize="24" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Bottom"/>
         <TextBlock Text="Amount: " FontSize="24" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Bottom"/>
         <TextBlock Text="Difficulty: " FontSize="24" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Bottom"/>
-
+        <TextBlock Text="{Binding BlockCreationTime}" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="6"/>
+        
+        
         <TextBox x:Name="_sendingFrom" Grid.Row="2" Grid.Column="1" BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="24" Text="{Binding Path=SendingFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="_sendingTo" Grid.Row="3" Grid.Column="1" BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="24" Text="{Binding Path=SendingTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="_amount" Grid.Row="4" Grid.Column="1" BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="24" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

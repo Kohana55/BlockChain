@@ -3,6 +3,7 @@ using BlockChain.Models.BlockChain;
 using DigiCard.UtilityObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace BlockChain.ViewModels
         }
         private string amount;
 
-<<<<<<< HEAD
+
         public string BlockCreationTime
         {
             get { return blockCreationTime; }
@@ -54,7 +55,7 @@ namespace BlockChain.ViewModels
             }
         }
         private string blockCreationTime;
-=======
+
         public int Difficulty
         {
             get { return difficulty; }
@@ -64,7 +65,7 @@ namespace BlockChain.ViewModels
             }
         }
         private int difficulty;
->>>>>>> 698344a556c4f7616a4402174a2e4c5504174aca
+
 
         public ICommand AddBlockButton
         {
@@ -78,6 +79,7 @@ namespace BlockChain.ViewModels
         {
             main.lewCoins.difficulty = difficulty;
             main.lewCoins.AddBlock(new Block(DateTime.Now, $"s:{sendingFrom},r:{sendingTo},n:{amount}"));
+            BlockCreationTime = $"Time taken: {main.lewCoins.hashTimer.ElapsedMilliseconds}ms";
             ClearUI();
         }
 

@@ -29,11 +29,6 @@ namespace BlockChain.Models.BlockChain
         public string data;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private Timer hashTimer;
-
-        /// <summary>
         /// Create a block using the date and the data
         /// The remaining information is set to null as it'll be replaced
         /// during the "AddBlock" process
@@ -66,8 +61,6 @@ namespace BlockChain.Models.BlockChain
 
         public void MineHash(int difficulty)
         {
-            hashTimer = new Timer();
-
             var leadingZeros = new string('0', difficulty);
             while (hash == null || hash.Substring(0, difficulty) != leadingZeros)
             {

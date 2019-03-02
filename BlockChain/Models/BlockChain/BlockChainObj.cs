@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BlockChain.Models.BlockChain
 {
@@ -10,6 +11,11 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public List<Block> chain;
         public int difficulty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Stopwatch hashTimer;
 
         /// <summary>
         /// Block Chain constructor
@@ -48,11 +54,16 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public void AddBlock(Block currentBlock)
         {
+            hashTimer = new Stopwatch();
+            
+
             Block latestBlock = GetLatestBlock();
             currentBlock.index = latestBlock.index + 1;
             currentBlock.previousHash = latestBlock.hash;
+            hashTimer.Start();
             currentBlock.MineHash(difficulty);
-            chain.Add(currentBlock);
+            hashTimer.Stop();
+            chain.Add(currentBlock);    
         }
 
     }
