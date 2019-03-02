@@ -19,7 +19,7 @@ namespace BlockChain.Models.BlockChain
         {
             chain = new List<Block>();
             chain.Add(CreateGenesisBlock());
-            difficulty = 2;
+            difficulty = 3;
         }
 
         /// <summary>

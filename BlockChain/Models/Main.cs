@@ -12,7 +12,7 @@ namespace BlockChain.Models
         /// <summary>
         /// Lew Coins!!!! 
         /// </summary>
-        BlockChainObj lewCoins;
+        public BlockChainObj lewCoins;
 
         /// <summary>
         /// Entry point for our programme
@@ -22,17 +22,15 @@ namespace BlockChain.Models
         /// </summary>
         public Main()
         {
-
             lewCoins = new BlockChainObj();
 
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:100"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:600"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:300"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:2200"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:670"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:17"));
-            lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:940"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:100"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:600"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:300"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:2200"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:670"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:17"));
+            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:940"));
         }
-
     }
 }

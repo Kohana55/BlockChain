@@ -58,6 +58,8 @@
     <Compile Include="Models\BlockChain\Block.cs" />
     <Compile Include="Models\BlockChain\BlockChainObj.cs" />
     <Compile Include="Models\Main.cs" />
+    <Compile Include="Models\Utility\BindableBase.cs" />
+    <Compile Include="Models\Utility\DeleteCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

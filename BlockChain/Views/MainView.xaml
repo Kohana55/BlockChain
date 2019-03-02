@@ -7,6 +7,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Block Chain Generator" FontSize="24" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+
+        <TextBlock Text="Sending from: " FontSize="24" HorizontalAlignment="Left" Grid.Row="2"/>
+        <TextBlock Text="Sending to: " FontSize="24" HorizontalAlignment="Left" Grid.Row="3"/>
+        <TextBlock Text="Amount: " FontSize="24" HorizontalAlignment="Left" Grid.Row="4"/>
+
+        <TextBox x:Name="_sendingFrom" Grid.Row="2" Grid.Column="1" BorderThickness="0" FontSize="24" Text="{Binding Path=SendingFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="_sendingTo" Grid.Row="3" Grid.Column="1" BorderThickness="0" FontSize="24" Text="{Binding Path=SendingTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="_amount" Grid.Row="4" Grid.Column="1" BorderThickness="0" FontSize="24" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Button Content="Add Block" Grid.Row="6" Grid.ColumnSpan="2" Command="{Binding AddBlockButton}"/>
     </Grid>
 </UserControl>
