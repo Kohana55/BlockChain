@@ -44,6 +44,16 @@ namespace BlockChain.ViewModels
         }
         private string amount;
 
+        public string BlockCreationTime
+        {
+            get { return blockCreationTime; }
+            set
+            {
+                SetProperty(ref blockCreationTime, value);
+            }
+        }
+        private string blockCreationTime;
+
         public ICommand AddBlockButton
         {
             get { return addBlockButton ?? (addBlockButton = new DelegateCommand(AddBlock)); }
@@ -51,7 +61,6 @@ namespace BlockChain.ViewModels
         private ICommand addBlockButton;
 
         public MainViewModel() { }
-
 
         public void AddBlock()
         {
@@ -65,6 +74,5 @@ namespace BlockChain.ViewModels
             SendingTo = "";
             Amount = "";
         }
-
     }
 }

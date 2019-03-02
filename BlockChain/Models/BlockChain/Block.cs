@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Timers;
 
 namespace BlockChain.Models.BlockChain
 {
@@ -27,6 +28,10 @@ namespace BlockChain.Models.BlockChain
         public int nonce;
         public string data;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private Timer hashTimer;
 
         /// <summary>
         /// Create a block using the date and the data
@@ -61,6 +66,8 @@ namespace BlockChain.Models.BlockChain
 
         public void MineHash(int difficulty)
         {
+            hashTimer = new Timer();
+
             var leadingZeros = new string('0', difficulty);
             while (hash == null || hash.Substring(0, difficulty) != leadingZeros)
             {

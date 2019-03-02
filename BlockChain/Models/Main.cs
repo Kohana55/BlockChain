@@ -23,14 +23,6 @@ namespace BlockChain.Models
         public Main()
         {
             lewCoins = new BlockChainObj();
-
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:100"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:600"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:300"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:2200"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:670"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:17"));
-            //lewCoins.AddBlock(new Block(DateTime.Now, "s:Lewis,r:Aaron,n:940"));
         }
     }
 }
