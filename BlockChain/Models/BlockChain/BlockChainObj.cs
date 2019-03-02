@@ -8,7 +8,8 @@ namespace BlockChain.Models.BlockChain
         /// <summary>
         /// The Chain that makes up our Block Chain
         /// </summary>
-        List<Block> chain;
+        public List<Block> chain;
+        public int difficulty;
 
         /// <summary>
         /// Block Chain constructor
@@ -18,6 +19,7 @@ namespace BlockChain.Models.BlockChain
         {
             chain = new List<Block>();
             chain.Add(CreateGenesisBlock());
+            difficulty = 2;
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace BlockChain.Models.BlockChain
             Block latestBlock = GetLatestBlock();
             currentBlock.index = latestBlock.index + 1;
             currentBlock.previousHash = latestBlock.hash;
-            currentBlock.hash = currentBlock.GenerateHash();
+            currentBlock.MineHash(difficulty);
             chain.Add(currentBlock);
         }
 

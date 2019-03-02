@@ -24,6 +24,7 @@ namespace BlockChain.Models.BlockChain
         public DateTime date;
         public string previousHash;
         public string hash;
+        public int nonce;
         public string data;
 
 
@@ -40,6 +41,7 @@ namespace BlockChain.Models.BlockChain
             date = dt;
             previousHash = null;
             hash = null;
+            nonce = 0;
             data = dataArg;        
         }
 
@@ -51,10 +53,20 @@ namespace BlockChain.Models.BlockChain
         {
             SHA256 sha256 = SHA256.Create();
 
-            byte[] inputBytes = Encoding.ASCII.GetBytes($"{date}-{previousHash ?? ""}-{data}");
+            byte[] inputBytes = Encoding.ASCII.GetBytes($"{date}-{previousHash ?? ""}-{data}-{nonce}");
             byte[] outputBytes = sha256.ComputeHash(inputBytes);
 
             return Convert.ToBase64String(outputBytes);
+        }
+
+        public void MineHash(int difficulty)
+        {
+            var leadingZeros = new string('0', difficulty);
+            while (hash == null || hash.Substring(0, difficulty) != leadingZeros)
+            {
+                nonce++;
+                hash = GenerateHash();
+            }
         }
 
     }
