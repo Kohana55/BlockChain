@@ -44,6 +44,16 @@ namespace BlockChain.ViewModels
         }
         private string amount;
 
+        public int Difficulty
+        {
+            get { return difficulty; }
+            set
+            {
+                SetProperty(ref difficulty, value);
+            }
+        }
+        private int difficulty;
+
         public ICommand AddBlockButton
         {
             get { return addBlockButton ?? (addBlockButton = new DelegateCommand(AddBlock)); }
@@ -55,6 +65,7 @@ namespace BlockChain.ViewModels
 
         public void AddBlock()
         {
+            main.lewCoins.difficulty = difficulty;
             main.lewCoins.AddBlock(new Block(DateTime.Now, $"s:{sendingFrom},r:{sendingTo},n:{amount}"));
             ClearUI();
         }
