@@ -10,7 +10,7 @@ namespace BlockChain.Models.BlockChain
         /// The Chain that makes up our Block Chain
         /// </summary>
         public List<Block> chain;
-        public int difficulty;
+        public string nugget;
 
         /// <summary>
         /// 
@@ -25,7 +25,6 @@ namespace BlockChain.Models.BlockChain
         {
             chain = new List<Block>();
             chain.Add(CreateGenesisBlock());
-            difficulty = 3;
         }
 
         /// <summary>
@@ -35,8 +34,9 @@ namespace BlockChain.Models.BlockChain
         public Block CreateGenesisBlock()
         {
             Block genesisBlock = new Block(DateTime.Now, "");
-            genesisBlock.hash = genesisBlock.GenerateHash();
-
+            genesisBlock.MineHash(nugget);
+            genesisBlock.previousHash = "GenesisBlock";
+            genesisBlock.data = "GenesisBlock";
             return genesisBlock;
         }
 
@@ -54,17 +54,22 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public void AddBlock(Block currentBlock)
         {
+            StatusUpdate?.Invoke(this, "Mining Block...");
+
+            // Init a timer for timing the hash generation process
             hashTimer = new Stopwatch();
             
-
+            // Add block
             Block latestBlock = GetLatestBlock();
             currentBlock.index = latestBlock.index + 1;
             currentBlock.previousHash = latestBlock.hash;
             hashTimer.Start();
-            currentBlock.MineHash(difficulty);
+            currentBlock.MineHash(nugget);
             hashTimer.Stop();
             chain.Add(currentBlock);    
         }
 
+        public delegate void OnStatusUpdateEventHandler(object sender, string e);
+        public event OnStatusUpdateEventHandler StatusUpdate;
     }
 }

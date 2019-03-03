@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Timers;
 
 namespace BlockChain.Models.BlockChain
 {
@@ -59,13 +58,31 @@ namespace BlockChain.Models.BlockChain
             return Convert.ToBase64String(outputBytes);
         }
 
-        public void MineHash(int difficulty)
+        /// <summary>
+        /// Mines for a hash code that contains the input
+        /// from user. 
+        /// 
+        /// If no input is entered, the nugget defaults to "Lew"
+        /// Thus - "LewCoins"
+        /// </summary>
+        public void MineHash(string nugget)
         {
-            var leadingZeros = new string('0', difficulty);
-            while (hash == null || hash.Substring(0, difficulty) != leadingZeros)
+            // If nugget field is left blank, use "Lew"
+            if (nugget == null)
+                nugget = "Lew";
+
+            // Mine for Hash
+            bool hashMined = false;
+            while (hashMined == false)
             {
                 nonce++;
                 hash = GenerateHash();
+
+                for (int i = 0; (i < hash.Length - nugget.Length); i++)
+                {
+                    if (hash.Substring(i, nugget.Length) == nugget)
+                        hashMined = true;
+                }
             }
         }
 

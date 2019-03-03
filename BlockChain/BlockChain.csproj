@@ -60,7 +60,19 @@
     <Compile Include="Models\Main.cs" />
     <Compile Include="Models\Utility\BindableBase.cs" />
     <Compile Include="Models\Utility\DeleteCommand.cs" />
+    <Compile Include="ViewModels\AddBlockViewModel.cs" />
+    <Compile Include="ViewModels\BlockChainViewModel.cs" />
+    <Compile Include="ViewModels\BlockEntryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\AddBlockView.xaml.cs">
+      <DependentUpon>AddBlockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlockChainView.xaml.cs">
+      <DependentUpon>BlockChainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlockEntryView.xaml.cs">
+      <DependentUpon>BlockEntryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -76,6 +88,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddBlockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BlockChainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BlockEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

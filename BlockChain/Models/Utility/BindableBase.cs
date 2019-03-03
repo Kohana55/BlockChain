@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DigiCard.UtilityObjects
+namespace BlockChain.UtilityObjects
 {
     /// <summary>
     /// 

@@ -28,6 +28,8 @@ namespace BlockChain.Views
             set
             {
                 DataContext = value;
+                _AddBlockView.DataContext = value.addBlockViewModel;
+                _BlockChainView.DataContext = value.blockChainViewModel;
             }
         }
 

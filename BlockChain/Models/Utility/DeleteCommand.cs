@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DigiCard.UtilityObjects
+namespace BlockChain.UtilityObjects
 {
     public class DelegateCommand : ICommand
     {

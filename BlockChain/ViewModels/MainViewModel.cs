@@ -1,93 +1,52 @@
 ﻿using BlockChain.Models;
-using BlockChain.Models.BlockChain;
-using DigiCard.UtilityObjects;
+using BlockChain.UtilityObjects;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BlockChain.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel
     {
+
         private Main main = new Main();
 
-        public string SendingFrom
+        public AddBlockViewModel addBlockViewModel;
+        public BlockChainViewModel blockChainViewModel;
+
+        public ICommand TransactionScreenCommand
         {
-            get { return sendingFrom; }
-            set
-            {
-                SetProperty(ref sendingFrom, value);
-            }
+            get { return transactionScreenCommand ?? (transactionScreenCommand = new DelegateCommand(ShowTransactionScreen)); }
         }
-        private string sendingFrom;
+        private ICommand transactionScreenCommand;
 
-        public string SendingTo
+        public ICommand LedgerScreenCommand
         {
-            get { return sendingTo; }
-            set
-            {
-                SetProperty(ref sendingTo, value);
-            }
+            get { return ledgerScreenCommand ?? (ledgerScreenCommand = new DelegateCommand(ShowLedgerScreen)); }
         }
-        private string sendingTo;
+        private ICommand ledgerScreenCommand;
 
-        public string Amount
+        public MainViewModel()
         {
-            get { return amount; }
-            set
-            {
-                SetProperty(ref amount, value);
-            }
-        }
-        private string amount;
-
-
-        public string BlockCreationTime
-        {
-            get { return blockCreationTime; }
-            set
-            {
-                SetProperty(ref blockCreationTime, value);
-            }
-        }
-        private string blockCreationTime;
-
-        public int Difficulty
-        {
-            get { return difficulty; }
-            set
-            {
-                SetProperty(ref difficulty, value);
-            }
-        }
-        private int difficulty;
-
-
-        public ICommand AddBlockButton
-        {
-            get { return addBlockButton ?? (addBlockButton = new DelegateCommand(AddBlock)); }
-        }
-        private ICommand addBlockButton;
-
-        public MainViewModel() { }
-
-        public void AddBlock()
-        {
-            main.lewCoins.difficulty = difficulty;
-            main.lewCoins.AddBlock(new Block(DateTime.Now, $"s:{sendingFrom},r:{sendingTo},n:{amount}"));
-            BlockCreationTime = $"Time taken: {main.lewCoins.hashTimer.ElapsedMilliseconds}ms";
-            ClearUI();
+            addBlockViewModel = new AddBlockViewModel(main.lewCoins);
+            blockChainViewModel = new BlockChainViewModel(main.lewCoins);
         }
 
-        private void ClearUI()
+        private void ShowTransactionScreen()
         {
-            SendingFrom = "";
-            SendingTo = "";
-            Amount = "";
+            addBlockViewModel.IsVisible = Visibility.Visible;
+            blockChainViewModel.IsVisible = Visibility.Collapsed;
+        }
+
+        private void ShowLedgerScreen()
+        {
+            blockChainViewModel.PopulateBlockEntryCollection();
+            blockChainViewModel.IsVisible = Visibility.Visible;
+            addBlockViewModel.IsVisible = Visibility.Collapsed;
         }
     }
 }
