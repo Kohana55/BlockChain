@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlockChain.Models.BlockChain;
+using BlockChain.Models.Networking;
 
 namespace BlockChain.Models
 {
@@ -13,6 +14,9 @@ namespace BlockChain.Models
         /// Lew Coins!!!! 
         /// </summary>
         public BlockChainObj lewCoins;
+        P2PServer server;
+        //P2PClient client;
+
 
         /// <summary>
         /// Entry point for our programme
@@ -23,6 +27,8 @@ namespace BlockChain.Models
         public Main()
         {
             lewCoins = new BlockChainObj();
+
+            Task serverConnection = Task.Run(() => server = new P2PServer(5000));
         }
     }
 }
