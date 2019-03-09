@@ -68,6 +68,11 @@ namespace BlockChain.Models.Networking
          * this class and used in its own right
          * within the P2PClient Class. 
          * 
+         * This frees up this class to then go back
+         * to listening for other connections. 
+         * Meaning we should in theory have a collection
+         * of clients. (If my understanding is correct)
+         * 
          * TODO: Remove the Send and Receive functions
          * from this class, return the client on connect
          * and pass to the P2PClient class and use its

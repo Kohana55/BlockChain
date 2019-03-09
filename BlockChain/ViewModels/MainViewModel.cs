@@ -77,9 +77,6 @@ namespace BlockChain.ViewModels
         private void OnConnectionSuccessfulMessageFromServer()
         {
             Port = $"Client connected on: {main.server.server.LocalEndpoint.ToString()}";
-
-            // TEST CODE - client connected, try sending a message to the client
-            main.server.Send("Hello");
         }
     }
 }

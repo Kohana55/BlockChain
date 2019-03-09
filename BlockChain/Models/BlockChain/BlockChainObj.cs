@@ -12,7 +12,12 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public List<Block> chain;
         public string nugget;
+        public TransactionPool transactionPool;
+
+        // To be replaced with "P2PClient" class
         public P2PServer server;
+
+
 
         /// <summary>
         /// 
@@ -27,6 +32,7 @@ namespace BlockChain.Models.BlockChain
         {
             this.server = server;
             chain = new List<Block>();
+            transactionPool = new TransactionPool();
             chain.Add(CreateGenesisBlock());
         }
 
@@ -70,6 +76,15 @@ namespace BlockChain.Models.BlockChain
             currentBlock.MineHash(nugget);
             hashTimer.Stop();
             chain.Add(currentBlock);    
+        }
+
+        public void ProcessTransaction(Transaction transaction)
+        {
+            transaction.RunHash();
+            transactionPool.AddTransaction(transaction);
+
+            // send on network
+            server.Send(transaction.Serialise());
         }
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);

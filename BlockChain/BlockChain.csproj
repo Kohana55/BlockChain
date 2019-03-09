@@ -57,6 +57,8 @@
     </ApplicationDefinition>
     <Compile Include="Models\BlockChain\Block.cs" />
     <Compile Include="Models\BlockChain\BlockChainObj.cs" />
+    <Compile Include="Models\BlockChain\Transaction.cs" />
+    <Compile Include="Models\BlockChain\TransactionPool.cs" />
     <Compile Include="Models\Main.cs" />
     <Compile Include="Models\Networking\P2PServer.cs" />
     <Compile Include="Models\Utility\BindableBase.cs" />

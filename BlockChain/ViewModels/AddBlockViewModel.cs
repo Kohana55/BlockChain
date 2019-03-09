@@ -100,7 +100,15 @@ namespace BlockChain.ViewModels
         {
             Status = "Minging Block...";
             model.nugget = nugget;
+
+            // This will be removed as we move toward
+            // processing transactions instead
             model.AddBlock(new Block(DateTime.Now, $"s:{sendingFrom},r:{sendingTo},n:{amount}"));
+            
+            // The new process transaction method will database away 
+            // the transaction and send it across the network
+            model.ProcessTransaction(new Transaction(sendingFrom, sendingTo, amount, DateTime.Now));
+
             BlockCreationTime = $"Time taken: {model.hashTimer.ElapsedMilliseconds}ms";
             ClearUI();
             Status = "Ready";
