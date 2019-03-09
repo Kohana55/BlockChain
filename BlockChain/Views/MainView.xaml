@@ -11,17 +11,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <TextBlock Text="{Binding Port}" Grid.Row="1" FontSize="18"/>
+
         <local:AddBlockView x:Name="_AddBlockView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
         <local:BlockChainView x:Name="_BlockChainView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <Button Content="Transaction Screen" Grid.Row="1" Grid.Column="0" Command="{Binding TransactionScreenCommand}"/>
-        <Button Content="Ledger Screen" Grid.Row="1" Grid.Column="1" Command="{Binding LedgerScreenCommand}"/>
+        <Button Content="Transaction Screen" Grid.Row="2" Grid.Column="0" Command="{Binding TransactionScreenCommand}"/>
+        <Button Content="Ledger Screen" Grid.Row="2" Grid.Column="1" Command="{Binding LedgerScreenCommand}"/>
     </Grid>
 </UserControl>

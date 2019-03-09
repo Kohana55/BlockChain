@@ -21,7 +21,10 @@ namespace BlockChain.Models.Networking
         public P2PServer(int port)
         {
             Port = port;
+        }
 
+        public void Start()
+        {
             while (serverListening == false)
             {
                 try
@@ -30,13 +33,10 @@ namespace BlockChain.Models.Networking
                     server = new TcpListener(ip);
                     server.Start();
                     serverListening = true;
+                    OnPortOpen?.Invoke();
                 }
-                catch (Exception ex)
-                {
-                    Port++;
-                }
+                catch (Exception ex) { Port++; }
             }
-
             ListenForConnection();
         }
 
@@ -46,7 +46,15 @@ namespace BlockChain.Models.Networking
         public void ListenForConnection()
         {
             client = server.AcceptTcpClient();
+            OnConnectionSuccessful?.Invoke();
             IsConnected = true;
         }
+
+
+        public delegate void OpenPortEventHandler();
+        public event OpenPortEventHandler OnPortOpen;
+
+        public delegate void ConnectionSuccessfulEventHandler();
+        public event ConnectionSuccessfulEventHandler OnConnectionSuccessful;
     }
 }

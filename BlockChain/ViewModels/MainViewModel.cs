@@ -10,13 +10,23 @@ using System.Windows.Input;
 
 namespace BlockChain.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : BindableBase
     {
 
         private Main main = new Main();
 
         public AddBlockViewModel addBlockViewModel;
         public BlockChainViewModel blockChainViewModel;
+
+        public string Port
+        {
+            get { return port; }
+            set
+            {
+                SetProperty(ref port, value);
+            }
+        }
+        public string port;
 
         public ICommand TransactionScreenCommand
         {
@@ -34,6 +44,8 @@ namespace BlockChain.ViewModels
         {
             addBlockViewModel = new AddBlockViewModel(main.lewCoins);
             blockChainViewModel = new BlockChainViewModel(main.lewCoins);
+            main.server.OnPortOpen += OnPortOpenMessageFromServer;
+            main.server.OnConnectionSuccessful += OnConnectionSuccessfulMessageFromServer;
         }
 
         private void ShowTransactionScreen()
@@ -47,6 +59,24 @@ namespace BlockChain.ViewModels
             blockChainViewModel.PopulateBlockEntryCollection();
             blockChainViewModel.IsVisible = Visibility.Visible;
             addBlockViewModel.IsVisible = Visibility.Collapsed;
+            
+        }
+
+        /// <summary>
+        /// Server is listening, update UI
+        /// </summary>
+        /// <param name="sender"></param>
+        private void OnPortOpenMessageFromServer()
+        {
+            Port = $"Listening on: {main.server.server.LocalEndpoint.ToString()}";
+        }
+
+        /// <summary>
+        /// Server has recieved an active TCP connection, update UI
+        /// </summary>
+        private void OnConnectionSuccessfulMessageFromServer()
+        {
+            Port = $"Client connected on: {main.server.server.LocalEndpoint.ToString()}";
         }
     }
 }
