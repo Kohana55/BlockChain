@@ -1,24 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlockChain.Models.Networking
 {
     public class P2PServer
     {
+        public TcpListener server;
+        public TcpClient client;
+        IPEndPoint ip;
 
-        TcpListener server;
-        TcpClient client;
+        bool IsConnected { get; set; } = false;
+        int Port = 0;
+        bool serverListening = false;        
 
-        bool isConnected = false;
-
+        /// <summary>
+        /// Setup the server, scanning for availale port
+        /// </summary>
+        /// <param name="port"></param>
         public P2PServer(int port)
         {
-            server = new TcpListener(IPAddress.Parse("127.0.0.1"), port);            
+            Port = port;
+
+            while (serverListening == false)
+            {
+                try
+                {
+                    ip = new IPEndPoint(IPAddress.Any, Port);
+                    server = new TcpListener(ip);
+                    server.Start();
+                    serverListening = true;
+                }
+                catch (Exception ex)
+                {
+                    Port++;
+                }
+            }
+
             ListenForConnection();
         }
 
@@ -27,17 +45,8 @@ namespace BlockChain.Models.Networking
         /// </summary>
         public void ListenForConnection()
         {
-            try
-            {
-                server.Start();
-                client = server.AcceptTcpClient();
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            isConnected = true;
+            client = server.AcceptTcpClient();
+            IsConnected = true;
         }
     }
 }

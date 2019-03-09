@@ -37,6 +37,7 @@ namespace BlockChain.Views
         {
             InitializeComponent();
             ViewModel = new MainViewModel();
+            
         }
     }
 }
