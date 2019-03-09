@@ -1,6 +1,10 @@
 # BlockChain
 A C# BlockChain client
 
-This application opens up a port to accept connections from the BlockChain Miner.
+This client will send out transactions across the network. 
+The miner will pool these transactions and attempt to create a block. Once made the miner will propose the block back to this client.
+If this client is happy, the block is added to the chain and an update is sent out to all other nodes. 
 
-The idea is to have it send out transactions and for the miner to hear them. Create a block and propose it to the client. If the client is happy then it'll add it to the blockchain. 
+# Note
+A confusing sidenote: This application is the "BlockChain Client", but the TCP connection part of it acts as the server.
+Meaning the "BlockChain Client" (this) is the "TCP Server" & the "BlockChain Miner" also available on this GIT, is the "TCP Client".
