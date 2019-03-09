@@ -25,7 +25,7 @@ namespace BlockChain.Models
         /// </summary>
         public Main()
         {
-            lewCoins = new BlockChainObj();
+            lewCoins = new BlockChainObj(server);
             server = new P2PServer(1000);
             Task serverConnection = Task.Run(() => server.Start());
         }

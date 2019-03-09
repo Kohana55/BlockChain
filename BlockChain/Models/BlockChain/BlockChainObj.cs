@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlockChain.Models.Networking;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,6 +12,7 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         public List<Block> chain;
         public string nugget;
+        public P2PServer server;
 
         /// <summary>
         /// 
@@ -21,8 +23,9 @@ namespace BlockChain.Models.BlockChain
         /// Block Chain constructor
         /// Both creates the chain and the genesis block
         /// </summary>
-        public BlockChainObj()
+        public BlockChainObj(P2PServer server)
         {
+            this.server = server;
             chain = new List<Block>();
             chain.Add(CreateGenesisBlock());
         }

@@ -23,6 +23,10 @@ namespace BlockChain.Models.Networking
             Port = port;
         }
 
+
+        /// <summary>
+        /// Start the TCP Server
+        /// </summary>
         public void Start()
         {
             while (serverListening == false)
@@ -48,6 +52,39 @@ namespace BlockChain.Models.Networking
             client = server.AcceptTcpClient();
             OnConnectionSuccessful?.Invoke();
             IsConnected = true;
+            StartReceiving();
+        }
+
+        /// <summary>
+        /// The receiving method - runs until connection is lost (or should)
+        /// </summary>
+        public void StartReceiving()
+        {
+            Byte[] buffer = new Byte[256];
+            while (client.Connected)
+            {
+                int bytesRead;
+                while((bytesRead = client.GetStream().Read(buffer, 0, buffer.Length)) != 0)
+                {
+                    // Convert message into ASCII
+                    string data = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
+
+                    // Do stuff with received buffer
+
+
+                    // Let calling programme know a message was received
+                    OnMessageReceived?.Invoke();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes bytes to the TCP Networking stream
+        /// </summary>
+        public void Send()
+        {
+            Byte[] buffer = new Byte[256];
+            client.GetStream().Write(buffer, 0, buffer.Length);
         }
 
 
@@ -56,5 +93,8 @@ namespace BlockChain.Models.Networking
 
         public delegate void ConnectionSuccessfulEventHandler();
         public event ConnectionSuccessfulEventHandler OnConnectionSuccessful;
+
+        public delegate void MessageReceivedEventHandler();
+        public event MessageReceivedEventHandler OnMessageReceived;
     }
 }
