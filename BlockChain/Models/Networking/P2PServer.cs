@@ -6,14 +6,18 @@ namespace BlockChain.Models.Networking
 {
     public class P2PServer
     {
+        #region FieldsAndProps
         public TcpListener server;
         public TcpClient client;
         IPEndPoint ip;
 
         bool IsConnected { get; set; } = false;
         int Port = 0;
-        bool serverListening = false;        
+        bool serverListening = false;
+        #endregion
 
+
+        #region Constructor
         /// <summary>
         /// Setup the server, scanning for availale port
         /// </summary>
@@ -22,8 +26,10 @@ namespace BlockChain.Models.Networking
         {
             Port = port;
         }
+        #endregion
 
 
+        #region Methods
         /// <summary>
         /// Start the TCP Server
         /// </summary>
@@ -54,6 +60,19 @@ namespace BlockChain.Models.Networking
             IsConnected = true;
             StartReceiving();
         }
+        #endregion
+
+        #region UsingTheClient
+        /*****************************
+         * The TCP Client should be returned from
+         * this class and used in its own right
+         * within the P2PClient Class. 
+         * 
+         * TODO: Remove the Send and Receive functions
+         * from this class, return the client on connect
+         * and pass to the P2PClient class and use its
+         * Send and Receive functions
+         * ***************************/
 
         /// <summary>
         /// The receiving method - runs until connection is lost (or should)
@@ -81,13 +100,16 @@ namespace BlockChain.Models.Networking
         /// <summary>
         /// Writes bytes to the TCP Networking stream
         /// </summary>
-        public void Send()
+        public void Send(string data)
         {
             Byte[] buffer = new Byte[256];
+            buffer = System.Text.Encoding.ASCII.GetBytes(data);
             client.GetStream().Write(buffer, 0, buffer.Length);
         }
+        #endregion
 
 
+        #region DelegatesAndEvents
         public delegate void OpenPortEventHandler();
         public event OpenPortEventHandler OnPortOpen;
 
@@ -96,5 +118,6 @@ namespace BlockChain.Models.Networking
 
         public delegate void MessageReceivedEventHandler();
         public event MessageReceivedEventHandler OnMessageReceived;
+        #endregion
     }
 }
