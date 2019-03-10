@@ -13,9 +13,7 @@ namespace BlockChain.Models.BlockChain
         public List<Block> chain;
         public string nugget;
         public TransactionPool transactionPool;
-
-        // To be replaced with "P2PClient" class
-        public P2PServer server;
+        public P2PClient client;
 
 
 
@@ -28,9 +26,9 @@ namespace BlockChain.Models.BlockChain
         /// Block Chain constructor
         /// Both creates the chain and the genesis block
         /// </summary>
-        public BlockChainObj(P2PServer server)
+        public BlockChainObj(P2PClient client)
         {
-            this.server = server;
+            this.client = client;
             chain = new List<Block>();
             transactionPool = new TransactionPool();
             chain.Add(CreateGenesisBlock());
@@ -84,7 +82,8 @@ namespace BlockChain.Models.BlockChain
             transactionPool.AddTransaction(transaction);
 
             // send on network
-            server.Send(transaction.Serialise());
+            if (client != null)
+                client.Send(transaction.Serialise());
         }
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);

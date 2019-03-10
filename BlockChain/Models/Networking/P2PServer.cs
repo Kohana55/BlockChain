@@ -56,60 +56,8 @@ namespace BlockChain.Models.Networking
         public void ListenForConnection()
         {
             client = server.AcceptTcpClient();
-            OnConnectionSuccessful?.Invoke();
+            OnConnectionSuccessful?.Invoke(new ClientFromServerEventArgs(client));
             IsConnected = true;
-            StartReceiving();
-        }
-        #endregion
-
-        #region UsingTheClient
-        /*****************************
-         * The TCP Client should be returned from
-         * this class and used in its own right
-         * within the P2PClient Class. 
-         * 
-         * This frees up this class to then go back
-         * to listening for other connections. 
-         * Meaning we should in theory have a collection
-         * of clients. (If my understanding is correct)
-         * 
-         * TODO: Remove the Send and Receive functions
-         * from this class, return the client on connect
-         * and pass to the P2PClient class and use its
-         * Send and Receive functions
-         * ***************************/
-
-        /// <summary>
-        /// The receiving method - runs until connection is lost (or should)
-        /// </summary>
-        public void StartReceiving()
-        {
-            Byte[] buffer = new Byte[256];
-            while (client.Connected)
-            {
-                int bytesRead;
-                while((bytesRead = client.GetStream().Read(buffer, 0, buffer.Length)) != 0)
-                {
-                    // Convert message into ASCII
-                    string data = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
-                    // Do stuff with received buffer
-
-
-                    // Let calling programme know a message was received
-                    OnMessageReceived?.Invoke();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Writes bytes to the TCP Networking stream
-        /// </summary>
-        public void Send(string data)
-        {
-            Byte[] buffer = new Byte[256];
-            buffer = System.Text.Encoding.ASCII.GetBytes(data);
-            client.GetStream().Write(buffer, 0, buffer.Length);
         }
         #endregion
 
@@ -118,11 +66,21 @@ namespace BlockChain.Models.Networking
         public delegate void OpenPortEventHandler();
         public event OpenPortEventHandler OnPortOpen;
 
-        public delegate void ConnectionSuccessfulEventHandler();
+        public delegate void ConnectionSuccessfulEventHandler(ClientFromServerEventArgs e);
         public event ConnectionSuccessfulEventHandler OnConnectionSuccessful;
 
         public delegate void MessageReceivedEventHandler();
-        public event MessageReceivedEventHandler OnMessageReceived;
         #endregion
+    }
+
+    public class ClientFromServerEventArgs : EventArgs
+    {
+
+        public ClientFromServerEventArgs(TcpClient Client)
+        {
+            client = Client;
+        }
+
+        public TcpClient client;
     }
 }

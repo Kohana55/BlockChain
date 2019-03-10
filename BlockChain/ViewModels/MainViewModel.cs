@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BlockChain.Models.Networking;
 
 namespace BlockChain.ViewModels
 {
@@ -74,7 +75,7 @@ namespace BlockChain.ViewModels
         /// <summary>
         /// Server has recieved an active TCP connection, update UI
         /// </summary>
-        private void OnConnectionSuccessfulMessageFromServer()
+        private void OnConnectionSuccessfulMessageFromServer(ClientFromServerEventArgs e)
         {
             Port = $"Client connected on: {main.server.server.LocalEndpoint.ToString()}";
         }
