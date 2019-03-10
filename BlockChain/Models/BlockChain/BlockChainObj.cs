@@ -29,6 +29,7 @@ namespace BlockChain.Models.BlockChain
         public BlockChainObj(P2PClient client)
         {
             this.client = client;
+            client.OnMessageReceived += MessageReceivedFromClient;
             chain = new List<Block>();
             transactionPool = new TransactionPool();
             chain.Add(CreateGenesisBlock());
@@ -76,6 +77,11 @@ namespace BlockChain.Models.BlockChain
             chain.Add(currentBlock);    
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transaction"></param>
         public void ProcessTransaction(Transaction transaction)
         {
             transaction.RunHash();
@@ -85,6 +91,24 @@ namespace BlockChain.Models.BlockChain
             if (client != null)
                 client.Send(transaction.Serialise());
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        private void MessageReceivedFromClient(string message)
+        {
+            if (message.Substring(0) == "TRANSACTION")
+            {
+                transactionPool.AddTransaction(new Transaction(message));
+            }
+            else // is BLOCK
+            {
+
+            }
+        }
+
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);
         public event OnStatusUpdateEventHandler StatusUpdate;

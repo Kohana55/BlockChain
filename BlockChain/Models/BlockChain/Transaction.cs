@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BlockChain.Models.BlockChain
 {
@@ -18,6 +15,15 @@ namespace BlockChain.Models.BlockChain
 
 
         /// <summary>
+        /// Construct a Transaction from a network message
+        /// </summary>
+        /// <param name="netWorkTransaction"></param>
+        public Transaction(string netWorkTransaction)
+        {
+            Deserialise(netWorkTransaction);
+        }
+
+        /// <summary>
         /// Constructs a transaction
         /// </summary>
         /// <param name="Sender"></param>
@@ -28,7 +34,7 @@ namespace BlockChain.Models.BlockChain
             sender = Sender;
             receiver = Receiver;
             amount = Amount;
-            dateTime = DateTime.Now;
+            this.dateTime = dateTime;
             RunHash();
         }
 
@@ -55,6 +61,31 @@ namespace BlockChain.Models.BlockChain
         public string Serialise()
         {
             return $"TRANSACTION:{sender},{receiver},{amount},{dateTime},{transactionHash}" + 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        public void Deserialise(string data)
+        {
+            string trimmedData = data.Substring(data.IndexOf(':') + 1);
+            string[] messageTokens = trimmedData.Split(',');
+
+            sender = messageTokens[0];
+            receiver = messageTokens[1];
+            amount = messageTokens[2];
+
+            // Parse DateTime
+            string[] dateTimeTokens = messageTokens[3].Split(' ');
+            string[] dateTokens = dateTimeTokens[0].Split('/');
+            string[] timeTokens = dateTimeTokens[1].Split(':');
+
+            dateTime = new DateTime(int.Parse(dateTokens[2]), int.Parse(dateTokens[1]), int.Parse(dateTokens[0]), 
+                                    int.Parse(timeTokens[0]), int.Parse(timeTokens[1]), int.Parse(timeTokens[2]));
+
+
+            transactionHash = messageTokens[4];
         }
     }
 }
