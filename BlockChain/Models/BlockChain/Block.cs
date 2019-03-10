@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace BlockChain.Models.BlockChain
         public string hash;
         public int nonce;
         public string data;
+        public List<Transaction> transactions;
 
         /// <summary>
         /// Create a block using the date and the data
@@ -34,14 +36,48 @@ namespace BlockChain.Models.BlockChain
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="dataArg"></param>
-        public Block(DateTime dt, string dataArg)
+        public Block(DateTime dt, string dataArg, List<Transaction> transactions)
         {
             index = 0;
             date = dt;
             previousHash = null;
             hash = null;
             nonce = 0;
-            data = dataArg;        
+            data = dataArg;
+            this.transactions = transactions;
+        }
+
+
+        /// <summary>
+        /// Builds a network block
+        /// </summary>
+        /// <param name="networkBlockBuffer"></param>
+        public Block(string networkBlockBuffer)
+        {//$"B:{index},{date},{previousHash},{hash},{nonce},{data}";
+
+            string[] tokens = networkBlockBuffer.Split(',');
+
+            // Index
+            index = int.Parse(tokens[0]);
+
+            // Parse DateTime
+            string[] dateTimeTokens = tokens[1].Split(' ');
+            string[] dateTokens = dateTimeTokens[0].Split('/');
+            string[] timeTokens = dateTimeTokens[1].Split(':');
+            date = new DateTime(int.Parse(dateTokens[2]), int.Parse(dateTokens[1]), int.Parse(dateTokens[0]),
+                        int.Parse(timeTokens[0]), int.Parse(timeTokens[1]), int.Parse(timeTokens[2]));
+
+            // Hash Codes
+            previousHash = tokens[2];
+            hash = tokens[3];
+            nonce = int.Parse(tokens[4]);
+
+            transactions = new List<Transaction>();
+            string[] transactionDataArray = tokens[5].Split('|');
+            for (int i = 0; i<transactionDataArray.Length; i++)
+            {
+                transactions.Add(new Transaction(transactionDataArray[i]));
+            }
         }
 
         /// <summary>
@@ -71,6 +107,8 @@ namespace BlockChain.Models.BlockChain
             if (nugget == null)
                 nugget = "Lew";
 
+            BuildDataString();
+
             // Mine for Hash
             bool hashMined = false;
             while (hashMined == false)
@@ -86,5 +124,24 @@ namespace BlockChain.Models.BlockChain
             }
         }
 
+        private void BuildDataString()
+        {
+            // Transactions can be null when building the Genesis Block
+            if (transactions == null)
+                return;
+
+            // Build Data string to be hashed
+            for (int i = 0; i < transactions.Count; i++)
+            {
+                data = string.Concat(data, transactions[0].Serialise());
+
+                if (!(i == transactions.Count - 1)) { data = string.Concat(data, "|"); }
+            }
+        }
+
+        public string Serialise()
+        {
+            return $"B:{index},{date},{previousHash},{hash},{nonce},{data}";
+        }
     }
 }

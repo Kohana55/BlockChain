@@ -40,6 +40,9 @@ namespace BlockChain.Models
         {
             client.client = e.client;
             Task clientConnection = Task.Run(() => client.StartReceiving());
+
+            // Send current Hash on network
+            client.Send($"U:{lewCoins.GetLatestBlock().hash},{lewCoins.GetLatestBlock().index}");
         }
     }
 }

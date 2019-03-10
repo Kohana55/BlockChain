@@ -41,7 +41,7 @@ namespace BlockChain.Models.BlockChain
         /// <returns></returns>
         public Block CreateGenesisBlock()
         {
-            Block genesisBlock = new Block(DateTime.Now, "");
+            Block genesisBlock = new Block(DateTime.Now, "", null);
             genesisBlock.MineHash(nugget);
             genesisBlock.previousHash = "GenesisBlock";
             genesisBlock.data = "GenesisBlock";
@@ -58,23 +58,20 @@ namespace BlockChain.Models.BlockChain
         }
 
         /// <summary>
-        /// Adds a block to the chain
+        /// Creates a new block from network message
+        /// then validates it - if all passes
+        /// Add to block chain
         /// </summary>
-        public void AddBlock(Block currentBlock)
+        public void ProcessBlockFromNetwork(string networkBlock)
         {
-            StatusUpdate?.Invoke(this, "Mining Block...");
+            Block potentialBlock = new Block(networkBlock);
 
-            // Init a timer for timing the hash generation process
-            hashTimer = new Stopwatch();
-            
-            // Add block
-            Block latestBlock = GetLatestBlock();
-            currentBlock.index = latestBlock.index + 1;
-            currentBlock.previousHash = latestBlock.hash;
-            hashTimer.Start();
-            currentBlock.MineHash(nugget);
-            hashTimer.Stop();
-            chain.Add(currentBlock);    
+            // Validate here...
+
+            if(GetLatestBlock().hash == potentialBlock.previousHash)
+            {
+                chain.Add(potentialBlock);
+            }
         }
 
 
@@ -99,13 +96,12 @@ namespace BlockChain.Models.BlockChain
         /// <param name="message"></param>
         private void MessageReceivedFromClient(string message)
         {
-            if (message.Substring(0) == "TRANSACTION")
-            {
-                transactionPool.AddTransaction(new Transaction(message));
-            }
-            else // is BLOCK
-            {
+            
 
+            if (message.Substring(0, "B:".Length) == "B:")
+            {
+                string trimmedData = message.Substring(message.IndexOf(':') + 1);
+                ProcessBlockFromNetwork(trimmedData);
             }
         }
 

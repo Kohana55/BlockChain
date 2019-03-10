@@ -41,17 +41,6 @@ namespace BlockChain.ViewModels
         }
         private string amount;
 
-
-        public string BlockCreationTime
-        {
-            get { return blockCreationTime; }
-            set
-            {
-                SetProperty(ref blockCreationTime, value);
-            }
-        }
-        private string blockCreationTime;
-
         public string Status
         {
             get { return status; }
@@ -61,16 +50,6 @@ namespace BlockChain.ViewModels
             }
         }
         private string status;
-
-        public string Nugget
-        {
-            get { return nugget; }
-            set
-            {
-                SetProperty(ref nugget, value);
-            }
-        }
-        private string nugget;
 
 
         public ICommand AddBlockButton
@@ -98,18 +77,7 @@ namespace BlockChain.ViewModels
         /// </summary>
         public void AddBlock()
         {
-            Status = "Minging Block...";
-            model.nugget = nugget;
-
-            // This will be removed as we move toward
-            // processing transactions instead
-            model.AddBlock(new Block(DateTime.Now, $"s:{sendingFrom},r:{sendingTo},n:{amount}"));
-
-            // The new process transaction method will database away 
-            // the transaction and send it across the network
             model.ProcessTransaction(new Transaction(sendingFrom, sendingTo, amount, DateTime.Now));
-
-            BlockCreationTime = $"Time taken: {model.hashTimer.ElapsedMilliseconds}ms";
             ClearUI();
             Status = "Ready";
         }
@@ -122,7 +90,6 @@ namespace BlockChain.ViewModels
             SendingFrom = "";
             SendingTo = "";
             Amount = "";
-            Nugget = "";
         }
 
         /// <summary>
