@@ -31,7 +31,13 @@ namespace BlockChain.ViewModels
             PreviousHash = $"{block.previousHash}";
             Hash = $"{block.hash}";
             Nonce = $"{block.nonce}";
-            Data = $"{block.data}";
+
+            string tempData = "";
+            for(int i=0;i<block.transactions.Count;i++)
+            {
+                tempData = string.Concat(tempData, $"TRANSACTION\nSender: {block.transactions[i].sender}\nReceiver{block.transactions[i].receiver}\nAmount{block.transactions[i].amount}\n\n");
+            }
+            Data = tempData;
         }
     }
 }

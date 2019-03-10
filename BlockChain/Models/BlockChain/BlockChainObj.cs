@@ -45,6 +45,7 @@ namespace BlockChain.Models.BlockChain
             genesisBlock.MineHash(nugget);
             genesisBlock.previousHash = "GenesisBlock";
             genesisBlock.data = "GenesisBlock";
+            genesisBlock.transactions = new List<Transaction>();
             return genesisBlock;
         }
 
