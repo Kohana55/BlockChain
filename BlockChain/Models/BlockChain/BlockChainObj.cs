@@ -97,12 +97,13 @@ namespace BlockChain.Models.BlockChain
         /// <param name="message"></param>
         private void MessageReceivedFromClient(string message)
         {
-            
-
             if (message.Substring(0, "B:".Length) == "B:")
             {
                 string trimmedData = message.Substring(message.IndexOf(':') + 1);
                 ProcessBlockFromNetwork(trimmedData);
+                // Remove transactions from pool here
+                client.Send("M:BlockAccepted");
+                //client.Send($"U:{GetLatestBlock().hash},{GetLatestBlock().index}");
             }
         }
 
