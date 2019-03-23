@@ -29,38 +29,12 @@ namespace BlockChain.ViewModels
         }
         public string port;
 
-        public ICommand TransactionScreenCommand
-        {
-            get { return transactionScreenCommand ?? (transactionScreenCommand = new DelegateCommand(ShowTransactionScreen)); }
-        }
-        private ICommand transactionScreenCommand;
-
-        public ICommand LedgerScreenCommand
-        {
-            get { return ledgerScreenCommand ?? (ledgerScreenCommand = new DelegateCommand(ShowLedgerScreen)); }
-        }
-        private ICommand ledgerScreenCommand;
-
         public MainViewModel()
         {
             addBlockViewModel = new AddBlockViewModel(main.lewCoins);
             blockChainViewModel = new BlockChainViewModel(main.lewCoins);
             main.server.OnPortOpen += OnPortOpenMessageFromServer;
             main.server.OnConnectionSuccessful += OnConnectionSuccessfulMessageFromServer;
-        }
-
-        private void ShowTransactionScreen()
-        {
-            addBlockViewModel.IsVisible = Visibility.Visible;
-            blockChainViewModel.IsVisible = Visibility.Collapsed;
-        }
-
-        private void ShowLedgerScreen()
-        {
-            blockChainViewModel.PopulateBlockEntryCollection();
-            blockChainViewModel.IsVisible = Visibility.Visible;
-            addBlockViewModel.IsVisible = Visibility.Collapsed;
-            
         }
 
         /// <summary>

@@ -5,26 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BlockChain.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Green">
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <TextBlock Text="BLOCKCHAIN WALLET" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <TextBlock Text="{Binding Port}" Grid.Row="1" FontSize="18"/>
+        <TabControl Grid.Row="1">
+            <TabItem Style="{StaticResource TabStyle}">
+                <TabItem.Header>
+                    <TextBlock Text="TRANSACTIONS" FontSize="16" FontWeight="Bold"/>
+                </TabItem.Header>
+                <local:AddBlockView x:Name="_AddBlockView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            </TabItem>
+            <TabItem Style="{StaticResource TabStyle}">
+                <TabItem.Header>
+                    <TextBlock Text="LEDGER" FontSize="16" FontWeight="Bold"/>
+                </TabItem.Header>
+                <local:BlockChainView x:Name="_BlockChainView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            </TabItem>
+            <TabItem Style="{StaticResource TabStyle}">
+                <TabItem.Header>
+                    <TextBlock Text="SETTINGS" FontSize="16" FontWeight="Bold"/>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
 
-        <local:AddBlockView x:Name="_AddBlockView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <local:BlockChainView x:Name="_BlockChainView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-
-        <Button Content="Transaction Screen" Grid.Row="2" Grid.Column="0" Command="{Binding TransactionScreenCommand}"/>
-        <Button Content="Ledger Screen" Grid.Row="2" Grid.Column="1" Command="{Binding LedgerScreenCommand}"/>
     </Grid>
 </UserControl>

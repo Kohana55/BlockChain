@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="Gray" Grid.Row="0"/>
+        <Border Background="WhiteSmoke" Grid.Row="0"/>
         <TextBlock Text="{Binding Index}" FontSize="24" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <TextBlock Text="Date/Time:" FontSize="24" Grid.Row="1" HorizontalAlignment="Left"/>

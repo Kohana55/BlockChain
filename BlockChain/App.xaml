@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BlockChain"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
     </Application.Resources>
 </Application>

@@ -32,6 +32,7 @@ namespace BlockChain.ViewModels
         {
             model = blockChainModel;
             IsVisible = Visibility.Collapsed;
+            PopulateBlockEntryCollection();
         }
 
         /// <summary>

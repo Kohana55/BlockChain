@@ -23,13 +23,19 @@ namespace BlockChain
         public MainWindow()
         {
             InitializeComponent();
-
-            this.Closed += MainWindow_Closed;
         }
 
-        private void MainWindow_Closed(object sender, EventArgs e)
+        /// <summary>
+        /// Override to allow the mouse to move app from anywhere in liu of 
+        /// a traditional Windows bar
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
+            base.OnMouseLeftButtonDown(e);
 
+            // Begin dragging the window
+            this.DragMove();
         }
     }
 }
