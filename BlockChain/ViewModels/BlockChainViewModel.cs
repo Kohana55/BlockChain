@@ -2,6 +2,7 @@
 using BlockChain.UtilityObjects;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Data;
 
 namespace BlockChain.ViewModels
 {
@@ -16,13 +17,7 @@ namespace BlockChain.ViewModels
         }
         private ObservableCollection<BlockEntryViewModel> blocks = new ObservableCollection<BlockEntryViewModel>();
 
-        public Visibility IsVisible
-        {
-            get { return isVisible; }
-            set { SetProperty(ref isVisible, value); }
-        }
-        private Visibility isVisible;
-
+        public object __BlocksLock = new object();
 
         /// <summary>
         /// 
@@ -31,7 +26,16 @@ namespace BlockChain.ViewModels
         public BlockChainViewModel(BlockChainObj blockChainModel)
         {
             model = blockChainModel;
-            IsVisible = Visibility.Collapsed;
+            BindingOperations.EnableCollectionSynchronization(Blocks, __BlocksLock);
+            model.ChainUpdated += ProcessChainUpdateFromModel;
+            PopulateBlockEntryCollection();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ProcessChainUpdateFromModel()
+        {
             PopulateBlockEntryCollection();
         }
 
@@ -41,7 +45,7 @@ namespace BlockChain.ViewModels
         /// </summary>
         public void PopulateBlockEntryCollection()
         {
-            blocks.Clear();
+            Blocks.Clear();
             for (int i = 0; i < model.chain.Count; i++)
             {
                 Blocks.Add(new BlockEntryViewModel(model.chain[i]));

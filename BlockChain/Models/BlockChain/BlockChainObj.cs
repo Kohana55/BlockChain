@@ -72,6 +72,7 @@ namespace BlockChain.Models.BlockChain
             if(GetLatestBlock().hash == potentialBlock.previousHash)
             {
                 chain.Add(potentialBlock);
+                ChainUpdated?.Invoke();
             }
         }
 
@@ -110,5 +111,7 @@ namespace BlockChain.Models.BlockChain
 
         public delegate void OnStatusUpdateEventHandler(object sender, string e);
         public event OnStatusUpdateEventHandler StatusUpdate;
+        public delegate void OnChainUpdateEventHandler();
+        public event OnChainUpdateEventHandler ChainUpdated;
     }
 }
